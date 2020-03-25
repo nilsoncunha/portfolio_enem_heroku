@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Language" content="pt-br">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="shortcut icon" type="image/png" href="https://raw.githubusercontent.com/nilsoncunha/portfolioweb/master/assets/img/icons/favicon.ico">
+    <title>Portfólio | Previsão nota de Matemática do ENEM/2016</title>
+</head>
+<body>
+    <div class="container">
+        <form method="post" action="/predict">
+            <div class="row">
+                <div class="col">
+                    <h3 style="margin-left: 40px; margin-top: 1%">Realizando a previsão da nota de matemática do Enem de 2016</h3>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="cidade">Cidade:</label>
+                                <select id="cidades" name="cidades" class="form-control form-control-sm" required>
+                                    <option value="43">Belo Horizonte</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-1">
+                                <label for="idade">Idade:</label>
+                                <input type="number" name="idade" id="idade" class="form-control form-control-sm" placeholder="idade" min="16" max="60" required>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="escola">Escola:</label>
+                                <select id="escola" name="escola" class="form-control form-control-sm" required>
+                                    <option value="1">Não respondeu</option>
+                                    <option value="2" selected>Pública</option>
+                                    <option value="3">Privada</option>
+                                    <option value="4">Exterior</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="treineiro">Fez somente para treino?</label>
+                                <select name="treineiro" id="treineiro" class="form-control form-control-sm" required>
+                                    <option value="0">Não</option>
+                                    <option value="1">Sim</option>
+                                </select>
+                            </div>
+                        </div>
+                        <hr>
+                        <h4>Presença nas provas</h4>
+                        <div class="form-group row">
+                            <label for="pr_prova_cn" class="col-md-3 col-form-label">Ciências da Natureza:</label>
+                            <div class="col-md-2">
+                                <select name="pr_prova_cn" id="pr_prova_cn" class="form-control form-control-sm" required>
+                                    <option value="1">Sim</option>
+                                    <option value="0">Não</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="pr_prova_ch" class="col-md-3 col-form-label">Ciências Humanas:</label>
+                            <div class="col-md-2">
+                                <select name="pr_prova_ch" id="pr_prova_ch" class="form-control form-control-sm" required>
+                                    <option value="1">Sim</option>
+                                    <option value="0">Não</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="pr_prova_lc" class="col-md-3 col-form-label">Linguagens e Códigos:</label>
+                            <div class="col-md-2">
+                                <select name="pr_prova_lc" id="pr_prova_lc" class="form-control form-control-sm" required>
+                                    <option value="1">Sim</option>
+                                    <option value="0">Não</option>
+                                </select>
+                            </div>
+                        </div>
+                        <hr>
+                        <h4>Notas</h4>
+                        <div class="form-group row">
+                            <label for="nt_cn" class="col-md-3 col-form-label">Ciências da Natureza:</label>
+                            <div class="col-md-2">
+                                <input type="number" step=".01" class="form-control form-control-sm" name="nt_cn" id="nt_cn" min="0" max="1000" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="nt_ch" class="col-md-3 col-form-label">Ciências Humanas:</label>
+                            <div class="col-md-2">
+                                <input type="number" step=".01" class="form-control form-control-sm" name="nt_ch" id="nt_ch" min="0" max="1000" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="nt_lc" class="col-md-3 col-form-label">Linguagens e Códigos:</label>
+                            <div class="col-md-2">
+                                <input type="number" step=".01" class="form-control form-control-sm" name="nt_lc" id="nt_lc" min="0" max="1000" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="nt_redacao" class="col-md-3 col-form-label">Redação:</label>
+                            <div class="col-md-2">
+                                <input type="number" step=".01" class="form-control form-control-sm" name="nt_redacao" id="nt_redacao" min="0" max="1000" required>
+                            </div>
+                        </div>
+                </div>
+                <div class="col col-md-2" style="padding-top: 250px">
+                    <button type="submit" class="btn btn-secondary btn-sm">Fazer previsão</button>
+                    <br><br>
+                    <p>Nota prevista: {{ prediction }}</p>
+                    <br>
+                    <a href="/"><button type="button" class="btn btn-outline-secondary btn-sm">Refazer previsão</button></a>
+                </div>
+            </div>
+            <hr>
+        </form>
+        <div class="col-md-auto">
+            <p style="margin-left: 45%">
+                <a href="https://github.com/nilsoncunha/estudos"><img src="https://dl.dropbox.com/s/rs22cltyx48p22o/github.png?dl=0" width="23"></a>
+                <a href="https://www.linkedin.com/in/nilsoncunhan/"><img src="https://dl.dropbox.com/s/2fhe42ut4dul78z/linkedin.png?dl=0" width="33"></a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
