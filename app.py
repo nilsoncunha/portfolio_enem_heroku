@@ -6,13 +6,8 @@ app = Flask(__name__)
 model = pickle.load(open('model.pkl', 'rb'))
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
-
-
-@app.route('/predict', methods=['POST'])
-def predict():
     if request.method == 'POST':
         int_features = [float(x) for x in request.form.values()]
         final_features = [np.array(int_features)]
@@ -20,7 +15,10 @@ def predict():
 
         output = round(prediction[0], 2)
 
-    return render_template('index.html', prediction=output)
+        return render_template('index.html', prediction=output)
+
+    else:
+        return render_template('index.html')
 
 
 if __name__ == '__main__':
